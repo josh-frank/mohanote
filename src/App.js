@@ -58,7 +58,6 @@ function App() {
   );
   
   const [ currentEdit, setCurrentEdit ] = useState( { index: null, content: null } );
-  console.log('currentEdit: ', currentEdit);
 
   const updateNote = useCallback( ( noteIndex, contentToUpdate ) => {
     const newNotesState = [ ...notes ];
@@ -76,7 +75,6 @@ function App() {
     const newNotesState = [ ...notes ];
     [ newNotesState[ thisIndex ], newNotesState[ thatIndex ] ] = [ newNotesState[ thatIndex ], newNotesState[ thisIndex ] ];
     setNotes( newNotesState );
-    // setCurrentEdit( { index: thatIndex, content: newNotesState[ thatIndex ] } );
     setCurrentEdit( { index: null, content: null } );
   }, [ notes ] );
 
@@ -84,11 +82,9 @@ function App() {
     const clickedNoteIndex = clickEvent.target.closest("div").dataset && parseInt( clickEvent.target.closest("div").dataset.index );
     if ( clickEvent.target.name === "save" ) {
       updateNote( currentEdit.index, currentEdit.content );
-      // return;
     }
     if ( clickEvent.target.name === "delete" ) {
       deleteNote( clickedNoteIndex );
-      // return;
     }
     if ( typeof clickedNoteIndex == "number" && typeof currentEdit.index == "number" && clickedNoteIndex !== currentEdit.index ) {
       swapNotes( clickedNoteIndex, currentEdit.index );
@@ -96,11 +92,9 @@ function App() {
     }
     if ( !isNaN( clickedNoteIndex ) ) {
       setCurrentEdit( { index: clickedNoteIndex, content: notes[ clickedNoteIndex ] } );
-      // return;
     }
     if ( clickedNoteIndex === currentEdit.index ) {
       setCurrentEdit( { index: null, content: null } );
-      // return;
     }
   }, [ updateNote, deleteNote, swapNotes, notes, currentEdit ] );
 
